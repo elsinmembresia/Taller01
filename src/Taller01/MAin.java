@@ -8,6 +8,6 @@ public class MAin {
 		System.out.println("1) Menu de Usuarios");
 		System.out.println("2) Menu de Analisis");
 		System.out.println("3) Salir");
-		
+		System.out.print(">");
 	}
 }
