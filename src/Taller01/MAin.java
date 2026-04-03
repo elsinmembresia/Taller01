@@ -7,7 +7,7 @@ import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
-
+import java.io.BufferedWriter;
 public class MAin {
 	
 	
@@ -76,8 +76,6 @@ public class MAin {
 								existeContra=true;
 								System.out.println("Usuario encontrado");
 								
-								
-								
 							}
 								
 						}// fin while
@@ -85,8 +83,6 @@ public class MAin {
 						
 						if (!existeUsuario && !existeContra) { //control de error contraseña y/o usuario
 							System.out.println("Usuario y/o Contraseña incorrectos");
-							
-							
 							
 						}
 						
@@ -96,6 +92,8 @@ public class MAin {
 					}
 					
 				} while(!existeUsuario && !existeContra) ;
+				
+				
 				System.out.print("Bienvenido ");
 				System.out.println(respuestaUsuario);
 				System.out.println();
@@ -135,9 +133,29 @@ public class MAin {
 					
 					
 					if (menuUsuario==1) {
+						//Solicitar Actividad
+						System.out.println("Registre actividad con el formato (Fecha(00/00/0000);Horas;Actividad) ");
+						System.out.print(">");
+						String nuevaAct = s.nextLine();
 						
 						
-
+						//definir las maneras de escribir texto
+						try {
+							FileWriter writerRegistro = new FileWriter("txts/Registros.txt", true); //cada vez que quieras escribir un archivo hay que hacer un "FileWriter" (El True es para que empieze desde la ultima linea)
+							BufferedWriter escritor =new BufferedWriter(writerRegistro); // despues se usa como este
+							//Escritura en el archivo
+							
+							escritor.newLine();
+							escritor.write(respuestaUsuario + ";" + nuevaAct);
+							escritor.close();
+							
+							//IMPORTANTE CADA VEZ QUE SE RESCRIBA ALGO RECUERDA QUE SE GUARDA EN EL TXT
+							
+						} catch(Exception e2){
+							System.out.println("Error al momento de  abrir elarchivo para escritura");
+						} //fin try catch JAVA NO GUARDA NADA SI NO SE CIERRA EL ESCRITOR
+						
+						
 					}//fin op1MU
 					
 					else {
