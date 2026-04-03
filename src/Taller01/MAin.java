@@ -1,5 +1,5 @@
 package Taller01;
-//Alvaro Sevastian Orrego Ramírez RUT:22185824-7  Carrera: ITI
+//Alvaro Sebastian Orrego Ramírez RUT:22185824-7  Carrera: ITI
 //Anita Constanza Rojas Urrutia RUT: 22286335-K  Carrera: ITI
 
 import java.util.InputMismatchException;
@@ -100,9 +100,9 @@ public class MAin {
 				System.out.println("¿Que deseas realizar?");
 				System.out.println();
 				System.out.println("1) Registrar actividad");
-				System.out.println("2) Modificar");
-				System.out.println("1) Eliminar actividad");
-				System.out.println("2) Modificar");
+				System.out.println("2) Modificar actividad");
+				System.out.println("3) Eliminar actividad");
+				System.out.println("4) Cambiar contraseña");
 				System.out.println("5) Salir");
 				System.out.print(">");
 				
@@ -116,16 +116,12 @@ public class MAin {
 					//registrar acctividad
 					try {
 						Scanner archRegistroScan = new Scanner(archRegistro);
-						
-						
+
 						// Lectura de "REgistro"
 						while (archRegistroScan.hasNextLine()) {
 							String linea = archRegistroScan.nextLine();
-							String[] partes =linea.split(";");
-
 						}
-						
-						
+	
 					}catch(Exception e) {
 						//En caso que el archivo no sea encontrado
 						System.out.println("Error archivo Registros no se encuentra");
@@ -152,16 +148,236 @@ public class MAin {
 							//IMPORTANTE CADA VEZ QUE SE RESCRIBA ALGO RECUERDA QUE SE GUARDA EN EL TXT
 							
 						} catch(Exception e2){
-							System.out.println("Error al momento de  abrir elarchivo para escritura");
+							System.out.println("Error al momento de  abrir el archivo para escritura");
 						} //fin try catch JAVA NO GUARDA NADA SI NO SE CIERRA EL ESCRITOR
 						
 						
 					}//fin op1MU
 					
-					else {
+					else if (menuUsuario==2) { // Modificar Actividad
+						System.out.println("¿Cual actividad desear modificar?");
+						
+						int cont=0; //para el menu
+						int numActividad;//para la actividad
+						
+						try {
+							Scanner archRegistroScan = new Scanner(archRegistro);
+							
+							
+							// Lectura de "REgistro"
+							while (archRegistroScan.hasNextLine()) {
+								String linea = archRegistroScan.nextLine();
+								String[] partes =linea.split(";");
+								String nombre= partes[0];
+								if (nombre.equals(respuestaUsuario)) {
+									if (cont ==0) {
+										System.out.printf("%d) Regresar %n",cont); 
+										cont++;
+									}else {
+
+										System.out.printf("%d) %s %n",cont,linea); //imprime registros del usuario
+										cont++;
+									}
+								}
+
+							}
+							
+							
+						}catch(Exception e) {
+							//En caso que el archivo no sea encontrado
+							System.out.println("Error archivo Registros no se encuentra");
+						}
+						
+						int indiceAct=0;
+						
+						
+						System.out.println();
+						System.out.print(">"); //elegir actividad
+						int opRegistro;
+						String registroOp = s.nextLine();
+						opRegistro= Integer.parseInt(registroOp);
+						String actividad="";
+						try {
+							Scanner archRegistroScan = new Scanner(archRegistro);
+
+							
+							while (archRegistroScan.hasNextLine()) {
+								String linea = archRegistroScan.nextLine();
+								String[] partes =linea.split(";");
+								String nombre= partes[0];
+								if (nombre.equals(respuestaUsuario)) {
+									if (indiceAct==opRegistro) {
+										actividad=linea;
+									}
+									indiceAct++;									
+								}
+							}
+							archRegistroScan.close();
+		
+						}catch(Exception e) {
+							//En caso que el archivo no sea encontrado
+							System.out.println("Error archivo Registros no se encuentra");
+						}
+						System.out.println(actividad);
+						System.out.println();
+						System.out.println("¿Que desear modificar?");
+						System.out.println("0) Regresar");
+						System.out.println("1) Fecha");
+						System.out.println("2) Duracion");
+						System.out.println("3) Tipo de actividad");
+						System.out.print(">");
+						int menuModificar;
+						
+						String opModificar = s.nextLine();
+						menuModificar= Integer.parseInt(opModificar);
+						if (menuModificar==0) {
+							//pendiente Regresar
+							
+						} else if (menuModificar==1) {//menu fecha
+							
+							System.out.println("0) Regresar");
+							System.out.print("Ingrese nueva Fecha:");
+							String respuestaFecha= s.nextLine();
+							
+							if (respuestaFecha.equals("0")) {
+								//pendiente Regresar
+							}else {
+								try {
+									FileWriter writerRegistro = new FileWriter("txts/Registros.txt", true); //cada vez que quieras escribir un archivo hay que hacer un "FileWriter" (El True es para que empieze desde la ultima linea)
+									BufferedWriter escritor =new BufferedWriter(writerRegistro); // despues se usa como este
+									//Escritura en el archivo
+									
+									Scanner archRegistroScan = new Scanner(archRegistro);
+
+									
+									while (archRegistroScan.hasNextLine()) {
+										String linea = archRegistroScan.nextLine();
+										
+										if (linea.equals(actividad)) {
+											String[] partes =linea.split(";");
+											partes[1] = respuestaFecha ;
+											linea = String.join(";", partes);							
+										}
+										escritor.newLine();
+										escritor.write(linea);
+									}
+									archRegistroScan.close();
+									escritor.close();
+									
+									//IMPORTANTE CADA VEZ QUE SE RESCRIBA ALGO RECUERDA QUE SE GUARDA EN EL TXT
+									
+								} catch(Exception e2){
+									System.out.println("Error al momento de  abrir el archivo para escritura");
+								} 
+								
+							}
+
+							
+						}else if (menuModificar==2) { //menu duracion
+							System.out.println("0) Regresar");
+							System.out.print("Ingrese nueva Duracion:");
+							String respuestaDuracion= s.nextLine();
+							
+							if (respuestaDuracion.equals("0")) {
+								//pendiente Regresar
+							}else {
+								try {
+									FileWriter writerRegistro = new FileWriter("txts/Registros.txt", true); //cada vez que quieras escribir un archivo hay que hacer un "FileWriter" (El True es para que empieze desde la ultima linea)
+									BufferedWriter escritor =new BufferedWriter(writerRegistro); // despues se usa como este
+									//Escritura en el archivo
+									
+									Scanner archRegistroScan = new Scanner(archRegistro);
+
+									
+									while (archRegistroScan.hasNextLine()) {
+										String linea = archRegistroScan.nextLine();
+										
+										if (linea.equals(actividad)) {
+											String[] partes =linea.split(";");
+											partes[2] = respuestaDuracion ;
+											linea = String.join(";", partes);							
+										}
+										escritor.newLine();
+										escritor.write(linea);
+									}
+									archRegistroScan.close();
+									escritor.close();
+									
+									//IMPORTANTE CADA VEZ QUE SE RESCRIBA ALGO RECUERDA QUE SE GUARDA EN EL TXT
+									
+								} catch(Exception e2){
+									System.out.println("Error al momento de  abrir el archivo para escritura");
+								} 
+								
+							}
+							
+						}else if (menuModificar==3) { //menu tipo de actividad
+							System.out.println("0) Regresar");
+							System.out.print("Ingrese nuevo tipo de actividad:");
+							
+							String respuestaTipoAct= s.nextLine();
+							
+							if (respuestaTipoAct.equals("0")) {
+								//pendiente Regresar
+							}else {
+								try {
+									FileWriter writerRegistro = new FileWriter("txts/Registros.txt", true); //cada vez que quieras escribir un archivo hay que hacer un "FileWriter" (El True es para que empieze desde la ultima linea)
+									BufferedWriter escritor =new BufferedWriter(writerRegistro); // despues se usa como este
+									//Escritura en el archivo
+									
+									Scanner archRegistroScan = new Scanner(archRegistro);
+
+									
+									while (archRegistroScan.hasNextLine()) {
+										String linea = archRegistroScan.nextLine();
+										
+										if (linea.equals(actividad)) {
+											String[] partes =linea.split(";");
+											partes[3] = respuestaTipoAct ;
+											linea = String.join(";", partes); //une las partes en la linea nuevamente					
+										}
+										escritor.newLine();
+										escritor.write(linea);
+									}
+									archRegistroScan.close();
+									escritor.close();
+									
+									//IMPORTANTE CADA VEZ QUE SE RESCRIBA ALGO RECUERDA QUE SE GUARDA EN EL TXT
+									
+								} catch(Exception e2){
+									System.out.println("Error al momento de  abrir el archivo para escritura");
+								} 
+								
+							}
+							
+						}
+
+					}//fin op2MU
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					else if (menuUsuario==3) {
+						
+						
+						
+						
+					}//fin op3MU
+					
+					else if (menuUsuario==4) {
+						
+					}//fin op4MU
+					
+					else if (menuUsuario==5) { //op5MU
 						break;
 					}
-					
+
+
 				}while (menuUsuario!=1 && menuUsuario!=2 && menuUsuario!=3 &&menuUsuario!=4 && menuUsuario!=5);
 				//control de menu de usuario
 				
@@ -175,11 +391,7 @@ public class MAin {
 		}while (menuPrincipal!=1 && menuPrincipal!=2 && menuPrincipal!=3 );
 		 
 		
-		
-		
-		
-		
-		
+	
 
 	}
 
