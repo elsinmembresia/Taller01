@@ -1,6 +1,0 @@
-
-Catalina;1/4/2026;3;Teto
-Catalina;1/4/2026;3;KasaneTeto
-Catalina;01/04/2026;4;kasaneTeto
-Catalina;01/04/2026;4;KasaneTeto
-Catalina;1/4/2026;4;KasaneTeto
