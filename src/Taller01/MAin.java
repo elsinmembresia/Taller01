@@ -16,6 +16,9 @@ public class MAin {
 		File archUsuario= new File ("txts/Usuarios.txt");
 		File archRegistro=new File ("txts/Registros.txt");
 		
+		File archUsuarioTemp= new File ("txts/Usuarios_temp.txt");
+		File archRegistroTemp=new File ("txts/Registros_temp.txt");
+		
 
 		//definir el Scanner "Input"
 		Scanner s = new Scanner (System.in);
@@ -85,6 +88,7 @@ public class MAin {
 							System.out.println("Usuario y/o Contraseña incorrectos");
 							
 						}
+						archUsuarioScan.close();
 						
 					} catch(Exception e) {
 						//En caso que el archivo no sea encontrado
@@ -123,7 +127,8 @@ public class MAin {
 						while (archRegistroScan.hasNextLine()) {
 							String linea = archRegistroScan.nextLine();
 						}
-	
+						
+						archRegistroScan.close();
 					}catch(Exception e) {
 						//En caso que el archivo no sea encontrado
 						System.out.println("Error archivo Registros no se encuentra");
@@ -185,6 +190,7 @@ public class MAin {
 
 							}
 							
+							archRegistroScan.close();
 							
 						}catch(Exception e) {
 							//En caso que el archivo no sea encontrado
@@ -249,8 +255,8 @@ public class MAin {
 									
 								}else {
 									try {
-										FileWriter writerRegistro = new FileWriter("txts/Registros.txt", true); 
-										BufferedWriter escritor =new BufferedWriter(writerRegistro); 
+										
+										BufferedWriter escritor =new BufferedWriter(new FileWriter(archRegistroTemp)); 
 										//Escritura en el archivo
 										
 										Scanner archRegistroScan = new Scanner(archRegistro);
@@ -264,11 +270,25 @@ public class MAin {
 												partes[1] = respuestaFecha ;
 												linea = String.join(";", partes);							
 											}
-											escritor.newLine();
 											escritor.write(linea);
+											escritor.newLine();
+											
 										}
 										archRegistroScan.close();
 										escritor.close();
+										
+										if (archRegistro.delete()) {
+											
+											
+											if(archRegistroTemp.renameTo(archRegistro)) {
+											System.out.println("actividad actualizada!");
+											}else {
+												System.out.println("error!");
+											}
+												
+										}else {
+											System.out.println("error! al borrar archivo");
+										}
 										
 										
 									} catch(Exception e2){
@@ -287,8 +307,7 @@ public class MAin {
 									//pendiente Regresar
 								}else {
 									try {
-										FileWriter writerRegistro = new FileWriter("txts/Registros.txt", true); //cada vez que quieras escribir un archivo hay que hacer un "FileWriter" (El True es para que empieze desde la ultima linea)
-										BufferedWriter escritor =new BufferedWriter(writerRegistro); // despues se usa como este
+										BufferedWriter escritor =new BufferedWriter(new FileWriter(archRegistroTemp));  // despues se usa como este
 										//Escritura en el archivo
 										
 										Scanner archRegistroScan = new Scanner(archRegistro);
@@ -302,11 +321,25 @@ public class MAin {
 												partes[2] = respuestaDuracion ;
 												linea = String.join(";", partes);							
 											}
-											escritor.newLine();
 											escritor.write(linea);
+											escritor.newLine();
+											
 										}
 										archRegistroScan.close();
 										escritor.close();
+										
+										if (archRegistro.delete()) {
+											
+											
+											if(archRegistroTemp.renameTo(archRegistro)) {
+											System.out.println("actividad actualizada!");
+											}else {
+												System.out.println("error!");
+											}
+												
+										}else {
+											System.out.println("error! al borrar archivo");
+										}
 										
 										//IMPORTANTE CADA VEZ QUE SE RESCRIBA ALGO RECUERDA QUE SE GUARDA EN EL TXT
 										
@@ -326,8 +359,7 @@ public class MAin {
 									//pendiente Regresar
 								}else {
 									try {
-										FileWriter writerRegistro = new FileWriter("txts/Registros.txt", true); 
-										BufferedWriter escritor =new BufferedWriter(writerRegistro); 
+										BufferedWriter escritor =new BufferedWriter(new FileWriter(archRegistroTemp)); 
 										
 										Scanner archRegistroScan = new Scanner(archRegistro);
 	
@@ -340,13 +372,25 @@ public class MAin {
 												partes[3] = respuestaTipoAct ;
 												linea = String.join(";", partes);
 											}
-											escritor.newLine();
 											escritor.write(linea);
+											escritor.newLine();
+											
 										}
 										archRegistroScan.close();
 										escritor.close();
 										
-										
+										if (archRegistro.delete()) {
+											
+											
+											if(archRegistroTemp.renameTo(archRegistro)) {
+											System.out.println("actividad actualizada!");
+											}else {
+												System.out.println("error!");
+											}
+												
+										}else {
+											System.out.println("error! al borrar archivo");
+										}
 										
 									} catch(Exception e2){
 										System.out.println("Error al momento de  abrir el archivo para escritura");
@@ -461,6 +505,53 @@ public class MAin {
 					}//fin op3MU
 					
 					else if (menuUsuario==4) {
+						System.out.print("ingrese nueva contraseña:");
+						String nuevaContraseña = s.nextLine();
+						
+						try {
+							
+							
+							BufferedWriter escritor =new BufferedWriter(new FileWriter(archUsuarioTemp)); 
+							//Escritura en el archivo
+							
+							Scanner archUsuarioScan = new Scanner(archUsuario);
+
+							
+							while (archUsuarioScan.hasNextLine()) {
+								String linea = archUsuarioScan.nextLine();
+								String[] partes =linea.split(";");
+								String nombre = partes[0];
+								
+								if (nombre.equals(respuestaUsuario)) {
+									
+									partes[1] = nuevaContraseña ;
+									linea = String.join(";", partes);							
+								}
+								escritor.write(linea);
+								escritor.newLine();
+								
+							}
+							archUsuarioScan.close();
+							escritor.close();
+							
+							if (archUsuario.delete()) {
+								
+								
+								if(archUsuarioTemp.renameTo(archUsuario)) {
+								System.out.println("contraseña actualizada!");
+								}else {
+									System.out.println("error!");
+								}
+									
+							}else {
+								System.out.println("error! al borrar archivo");
+							}
+							
+							
+						} catch(Exception e2){
+							System.out.println("Error al momento de  abrir el archivo para escritura");
+						}
+						
 						
 					}//fin op4MU
 					
