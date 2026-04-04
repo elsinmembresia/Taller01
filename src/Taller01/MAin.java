@@ -563,6 +563,75 @@ public class MAin {
 				
 				
 			}//fin op1MP
+			if(menuPrincipal==2) {
+				int opcion;
+				do {
+					System.out.println("Bienvenido al menu de analisis");
+					System.out.println();
+					System.out.println("Que Accion desea realizar?");
+					System.out.println();
+					System.out.println("1)Actividad más realizada");
+					System.out.println("2)Actividad más realizada por cada Usuario");
+					System.out.println("3)Usuario con más procrastinacion");
+					System.out.println("4)Ver todas las actividades");
+					System.out.println("5)Salir");
+					System.out.print(">");
+					String respuestaUsuario= s.nextLine();
+					opcion = Integer.parseInt(respuestaUsuario);
+					
+					if(opcion==1) {
+						
+						
+						try{
+							Scanner lecturaRegistro= new Scanner(archRegistro);
+							
+							String lineaPasada="";
+							while(lecturaRegistro.hasNextLine()) {
+								String linea = lecturaRegistro.nextLine();
+								
+								String[] partes = linea.split(";");
+								
+								
+								if(lineaPasada.equals(partes[3])) {
+									
+								}
+								
+								
+								lineaPasada=partes[3];
+								
+								System.out.println(partes[3]);
+								
+							}
+						} catch(Exception e) {
+							System.out.println("error lectura Registro");
+						}
+
+						
+
+					}
+					if(opcion==4) {
+						
+						try{
+							Scanner lecturaRegistro= new Scanner(archRegistro);
+							while(lecturaRegistro.hasNextLine()) {
+								String linea = lecturaRegistro.nextLine();
+								String[] partes = linea.split(";");
+								System.out.println(partes[3]);
+								
+							}
+						} catch(Exception e) {
+							System.out.println("error lectura Registro");
+						}
+
+						
+
+					}
+					if(opcion==5) {
+						break;
+					}
+					
+				}while(opcion!=5);
+			}//fin op2MP
 			//opcion de "Salir"
 			else if(menuPrincipal==3) {
 				break;
